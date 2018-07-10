@@ -47,6 +47,13 @@ export default {
 </script>
 
 <style scoped>
+.el-menu{
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  z-index: 999;
 
+}
 
 </style>
