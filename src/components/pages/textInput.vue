@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="context">
 
     <el-input
       type="textarea"
@@ -15,7 +15,7 @@
       type="textarea"
       :autosize="{ minRows: 2, maxRows: 4}"
       placeholder="请输入内容"
-      v-model="textarea3">
+      v-model="textarea3" >
     </el-input>
 
   </div>
@@ -23,8 +23,8 @@
 </template>
 
 <script>
-    export default {
-        name: "text-input",
+ export default {
+    name: "text-input",
         data() {
           return {
             textarea: '',
@@ -35,5 +35,15 @@
 </script>
 
 <style scoped>
+  .context{
+    background-color: #fff;
+    border-radius: 20px;
+    width: 1000px;
+    height:auto;
+    margin: auto;
+    /*position: absolute;*/
+    top: auto;
+    left:auto;
+  }
 
 </style>

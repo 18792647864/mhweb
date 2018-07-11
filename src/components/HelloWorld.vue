@@ -4,8 +4,6 @@
 
     <text-input></text-input>
 
-    <!--<h1>{{ msg }}</h1>-->
-    <!--<h2>Ecosystem</h2>-->
     <!--<ul>-->
       <!--<li>-->
         <!--<a href="https://github.com/vuejs/awesome-vue" target="_blank" > awesome-vue </a>-->
