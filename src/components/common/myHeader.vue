@@ -4,8 +4,7 @@
     <el-menu
       :default-active="activeIndex2"
       class="el-menu-demo"
-      mode="horizontal"
-      @select="handleSelect">
+      mode="horizontal">
       <el-menu-item index="1" >
           处理中心
       </el-menu-item>
@@ -25,7 +24,7 @@
       <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
       <el-button type="primary">登陆</el-button>
       <el-button type="primary">注册</el-button>
-      <el-button type="primary">写文章</el-button>
+      <el-button type="primary" v-on:click="jumpToWrite">写文章</el-button>
     </el-menu>
 
   </div>
@@ -43,8 +42,8 @@ export default {
     }
   },
   methods: {
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath);
+    jumpToWrite: function (event) {
+      this.$router.push({path: '/WriteArticle'})
     }
   }
 
@@ -56,13 +55,12 @@ export default {
   position: fixed;
   top: 0px;
   left: 25%;
-  width: 100%;
+  width: 67%;
   z-index: 999;
 }
 .templatecss{
   font-size: 17px;
 }
-
 
 .el-button {
     margin-top: 10px;

@@ -25,11 +25,11 @@
 <script>
  export default {
     name: "text-input",
-        data() {
-          return {
-            textarea: '',
-            textarea3: ''
-         }
+    data() {
+        return {
+          textarea: '',
+          textarea3: ''
+       }
     }
     }
 </script>
