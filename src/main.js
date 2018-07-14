@@ -6,10 +6,15 @@ import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
+/* 编辑框引入 */
 import VueQuillEditor from 'vue-quill-editor'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
+
+/* axios 发送请求引入 */
+import axios from 'axios'
+Vue.prototype.$axios = axios
 
 Vue.use(VueQuillEditor)
 
