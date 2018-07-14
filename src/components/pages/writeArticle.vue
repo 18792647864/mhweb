@@ -13,16 +13,16 @@
           type="textarea"
           :rows="2"
           placeholder="请输入文章简介"
-          v-model="Introduction">
+          v-model="introduction">
         </el-input>
         <h3 align="left">文章内容</h3>
         <quill-editor ref="myTextEditor"
                     :content="content"
                     :options = "editorOption"
-                    @change="onEditorChange($event)">
+                   >
         </quill-editor>
 
-        <el-button class="elbuttoncss" type="primary">发布文章</el-button>
+        <el-button class="elbuttoncss" type="primary" v-on:click="saveArticle" >发布文章</el-button>
         <el-button class="elbuttoncss" type="primary">保存草稿</el-button>
     </div>
 
@@ -31,9 +31,9 @@
 
 </template>
 <script>
-  import MyHeader from '../common/myHeader'
-  import MyFooter from '../common/myFooter'
-  import { quillEditor } from 'vue-quill-editor'
+import MyHeader from '../common/myHeader'
+import MyFooter from '../common/myFooter'
+import { quillEditor } from 'vue-quill-editor'
 
   export default {
     name: 'write-article',
@@ -41,7 +41,7 @@
       return {
         msg: '这是写文章的页面！',
         content: '',
-        Introduction:'',
+        introduction:'',
         title:''
       }
     },
@@ -51,8 +51,44 @@
       quillEditor
     },
     methods: {
-      onEditorChange({ editor, html, text }) {//富文本编辑器  文本改变时 设置字段值
-        this.content = html
+      // onEditorChange({ editor, html, text }) {
+      //   this.content = html
+      // },
+
+      saveArticle: function () {
+        console.log(this.title)
+        console.log(this.introduction)
+        console.log(this.content)
+        var parm = {
+          title: this.title,
+          introduction: this.introduction,
+          content: this.content
+        };
+
+        // this.$axios.post('http://localhost:3000/article/addArticle', JSON.stringify({'data' :parm}))
+        //   .then(function (response) {
+        //     console.log(response);
+        // });
+
+        var qs = require('qs');
+        this.$axios({
+          method: 'post',
+          url: 'http://localhost:3000/article/addArticle',
+          data:qs.stringify({
+            'title': this.title,
+            'introduction': this.introduction,
+            'content': this.content
+          }, { indices: false }),
+          headers:{
+            'Content-Type':'application/x-www-form-urlencoded'
+          }
+        })
+
+      },
+      getUserInfo: function (event) {
+        this.$axios.get('http://localhost:3000/users/queryUser?uid=1').then(res => {
+          console.log(res)
+        })
       }
     }
   }
