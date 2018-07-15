@@ -4,7 +4,7 @@
       :default-active="activeIndex2"
       class="el-menu-demo"
       mode="horizontal">
-      <el-menu-item>
+      <el-menu-item index="1">
         <img src="/static/logo.png" alt="蛮荒社区" title="首页" height="50px"/>
       </el-menu-item>
 

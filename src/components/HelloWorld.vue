@@ -2,7 +2,7 @@
   <div class="hello">
     <my-header> </my-header>
 
-    <text-input></text-input>
+    <home-page></home-page>
 
     <!--<ul>-->
       <!--<li>-->
@@ -18,7 +18,7 @@
 
 import MyHeader from './common/myHeader'
 import MyFooter from './common/myFooter'
-import TextInput from './pages/textInput'
+import HomePage from './pages/homePage'
 
 export default {
 
@@ -31,7 +31,7 @@ export default {
   components: {
     MyHeader,
     MyFooter,
-    TextInput
+    HomePage
   }
 }
 </script>

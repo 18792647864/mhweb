@@ -17,8 +17,8 @@
         </el-input>
         <h3 align="left">文章内容</h3>
         <quill-editor ref="myTextEditor"
-                    :content="content"
-                    :options = "editorOption"
+                      v-model="content"
+                      :options = "editorOption"
                    >
         </quill-editor>
 
@@ -42,18 +42,17 @@ import { quillEditor } from 'vue-quill-editor'
         msg: '这是写文章的页面！',
         content: '',
         introduction:'',
-        title:''
+        title:'',
+        editorOption:{}
       }
     },
+
     components: {
       MyHeader,
       MyFooter,
       quillEditor
     },
     methods: {
-      // onEditorChange({ editor, html, text }) {
-      //   this.content = html
-      // },
 
       saveArticle: function () {
         console.log(this.title)
@@ -65,10 +64,6 @@ import { quillEditor } from 'vue-quill-editor'
           content: this.content
         };
 
-        // this.$axios.post('http://localhost:3000/article/addArticle', JSON.stringify({'data' :parm}))
-        //   .then(function (response) {
-        //     console.log(response);
-        // });
 
         var qs = require('qs');
         this.$axios({
@@ -99,10 +94,10 @@ import { quillEditor } from 'vue-quill-editor'
     background-color: #fff;
     border-radius: 20px;
     width: 1000px;
-    height:auto;
+    height: auto;
     margin: auto;
     top: auto;
-    left:auto;
+    left: auto;
   }
 
   .elbuttoncss {
