@@ -5,7 +5,12 @@
         {{item.title}}
       </div>
 
-      <div class="introductioncss" align="left">
+      <!--<div class="titlecss" align="left">-->
+        <!--<router-link :to="{ name: 'readArticle', query: { article:item }}" active-class="active">{{item.title}}</router-link>-->
+      <!--</div>-->
+
+
+      <div class="introductioncss" align="left" @click="jumpToRead(item)" >
         {{item.introduction}}
       </div>
 
@@ -40,7 +45,8 @@
     name: "home-page",
     data() {
         return {
-          articleInfos: null
+          articleInfos: null,
+          active: false
         }
       },
     methods: {
@@ -54,7 +60,12 @@
      },
       jumpToRead: function (article) {
         console.log(article);
-        this.$router.push({name:'readArticle',params:{ article:article}});
+        this.$router.push({name:'readArticle',query:{ title:article.title,
+                                                      uId:article.uId,
+                                                      release_time:article.release_time,
+                                                      categoryId:article.categoryId,
+                                                      introduction:article.introduction,
+                                                      content_id:article.content_id}});
       },
    },
    mounted:function () {
@@ -78,19 +89,18 @@
 
   .titlecss{
     font-size: larger;
-    font-weight: inherit;
-    font-style: inherit;
     top: auto;
     left: auto;
-    font-weight: bold;
+    color: #303030;
+    font-size: 20px;
   }
 
   .introductioncss{
     width: 60%;
-    font-size: larger;
-    font-weight: inherit;
-    font-style: inherit;
     margin-top: 10px;
+    font-size: 14px;
+    color: #999;
+    line-height: 25px;
   }
   .autorInfo{
     width: 60%;
