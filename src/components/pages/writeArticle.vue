@@ -46,7 +46,6 @@ import { quillEditor } from 'vue-quill-editor'
         editorOption:{}
       }
     },
-
     components: {
       MyHeader,
       MyFooter,
@@ -78,7 +77,6 @@ import { quillEditor } from 'vue-quill-editor'
             'Content-Type':'application/x-www-form-urlencoded'
           }
         })
-
       },
       getUserInfo: function (event) {
         this.$axios.get('http://localhost:3000/users/queryUser?uid=1').then(res => {

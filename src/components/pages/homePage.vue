@@ -1,7 +1,7 @@
 <template>
   <div class="context">
-    <div  v-for="item in articleInfo">
-      <div class="titlecss" align="left">
+    <div  v-for="item in articleInfos">
+      <div class="titlecss" align="left" @click="jumpToRead(item)">
         {{item.title}}
       </div>
 
@@ -13,16 +13,18 @@
         <span>
           {{item.uId}}
         </span>
-        <span>&emsp;&emsp;</span>
+        <span>&emsp;</span>
         <img class="likecss" src="/static/comment.png" title="评论"/>
         <span>
           15
         </span>
-        <span>&emsp;&emsp;</span>
+        <span>&emsp;</span>
         <img class="likecss" src="/static/like.png" title="点赞"/>
         <span>
           100
         </span>
+        <span>&emsp;{{item.release_time}}</span>
+
         <a  class="channelcss" href="homePage.vue">{{item.categoryId}}</a>
       </div>
       <hr class="dividingline" align="left" />
@@ -38,7 +40,7 @@
     name: "home-page",
     data() {
         return {
-          articleInfo: null
+          articleInfos: null
         }
       },
     methods: {
@@ -46,10 +48,14 @@
        var url = this.HOST + '/article/queryArticle';
        this.$axios.get(url).then(res => {
           console.log('console.log(res)');
-          this.articleInfo = res.data;
+          this.articleInfos = res.data;
           console.log(res)
        })
-     }
+     },
+      jumpToRead: function (article) {
+        console.log(article);
+        this.$router.push({name:'readArticle',params:{ article:article}});
+      },
    },
    mounted:function () {
      this.queryArticles();
