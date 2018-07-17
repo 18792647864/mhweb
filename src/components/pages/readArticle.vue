@@ -10,10 +10,10 @@
     <div class="autorInfo" align="left">
       <span>{{article.uId}}</span>
       <span>&emsp;</span>
-      <img class="likecss" src="/static/comment.png" title="评论"/>
+      <img class="likecss" src="static/comment.png" title="评论"/>
       <span>15</span>
       <span>&emsp;</span>
-      <img class="likecss" src="/static/like.png" title="点赞"/>
+      <img class="likecss" src="static/like.png" title="点赞"/>
       <span>100</span>
       <span>&emsp;{{article.release_time}}</span>
       <span>&emsp;&emsp;收藏</span>
@@ -27,7 +27,7 @@
     <div align="left" v-html="contentInfo"></div>
 
     <div class="praise-box">
-      <img  align="" class="likecontentcss" src="/static/like.png" title="点赞"/>
+      <img  align="" class="likecontentcss" src="static/like.png" title="点赞"/>
       <span style="margin-top: 0px">100</span>
     </div>
 
@@ -51,7 +51,7 @@
       <el-row>
         <el-col :span="8" v-for="(o, index) in 2" :key="o" :offset="index > 0 ? 2 : 0">
           <el-card :body-style="{ padding: '0px' }">
-            <img src="/static/hamburger.50e4091.png" class="image">
+            <img src="static/hamburger.50e4091.png" class="image">
             <div style="padding: 14px;">
               <span>好吃的汉堡</span>
               <div class="bottom clearfix">
@@ -81,24 +81,24 @@
     <div align="left">
       <p class="topicTitlecss">热门评论</p>
       <div title="热门评论">
-        <img class="useravtarcss" src="/static/avatar.jpg"/>
+        <img class="useravtarcss" src="static/avatar.jpg"/>
         <span class="usernamecss">&emsp;用户名称</span>
 
-        <img class="likecss likecommentcss" src="/static/like.png" title="点赞"/>
+        <img class="likecss likecommentcss" src="static/like.png" title="点赞"/>
         <span>
           100
         </span>
         <span>
           &emsp;&emsp;&emsp;
         </span>
-        <img class="likecss" src="/static/report.png" title="举报"/>
+        <img class="likecss" src="static/report.png" title="举报"/>
         <span>
           100
         </span>
         <p class="commentcss">
           年纪轻轻就疯了，一点都不可惜
         </p>
-        <img class="reviewcss" src="/static/review.png" title="点评"/>
+        <img class="reviewcss" src="static/review.png" title="点评"/>
         <span class="reviewfontcss">
           I want 点评
         </span>
@@ -111,24 +111,24 @@
     <div align="left">
       <p class="topicTitlecss">最新评论</p>
       <div title="热门评论">
-        <img class="useravtarcss" src="/static/avatar.jpg"/>
+        <img class="useravtarcss" src="static/avatar.jpg"/>
         <span class="usernamecss">&emsp;用户名称</span>
 
-        <img class="likecss likecommentcss" src="/static/like.png" title="点赞"/>
+        <img class="likecss likecommentcss" src="static/like.png" title="点赞"/>
         <span>
           100
         </span>
         <span>
           &emsp;&emsp;&emsp;
         </span>
-        <img class="likecss" src="/static/report.png" title="举报"/>
+        <img class="likecss" src="static/report.png" title="举报"/>
         <span>
           100
         </span>
         <p class="commentcss">
           毕志飞🌚🌚🌚🌚🌚🌚🌚🌚🌚🌚
         </p>
-        <img class="reviewcss" src="/static/review.png" title="点评"/>
+        <img class="reviewcss" src="static/review.png" title="点评"/>
         <span class="reviewfontcss">
           I want 点评
         </span>
