@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-menu
-      :default-active="activeIndex2"
+
       class="el-menu-demo"
       mode="horizontal">
       <el-menu-item index="1">
@@ -13,21 +13,50 @@
       </el-menu-item>
       <el-menu-item index="3">消息中心</el-menu-item>
       <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
-      <el-button type="primary" v-on:click="getUserInfo">登陆</el-button>
-      <el-button type="primary">注册</el-button>
+      <el-button v-if="islogin == 1" type="primary" >登 陆</el-button>
+      <el-button type="primary" >注 册</el-button>
       <el-button type="primary" v-on:click="jumpToWrite">写文章</el-button>
     </el-menu>
+
+
+    <el-dialog title="用 户 登 陆" :visible.sync="dialogFormVisible" class="eldialogcss">
+      <el-form :model="form" class="elformcss">
+        <el-form-item label="昵  称:" :label-width="formLabelWidth" >
+          <el-input v-model="form.name" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="密  码:" :label-width="formLabelWidth" >
+          <el-input v-model="form.password" type="password"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="el-footer">
+        <el-button @click="dialogFormVisible = false" style="margin: auto">取 消</el-button>
+        <el-button type="primary" @click="login" style="margin: auto">登 陆</el-button>
+      </div>
+    </el-dialog>
+
   </div>
 </template>
-
 <script>
+
+  import LoginDialog from './logindialog';
+
 export default {
   name: 'myHeader',
   data () {
     return {
-      radio: '1',
-      activeIndex: '1',
-      activeIndex2: '1'
+      islogin:'1',
+      dialogFormVisible: true,
+      form: {
+        name: '',
+        password: '',
+        date1: '',
+        date2: '',
+        delivery: false,
+        type: [],
+        resource: '',
+        desc: ''
+      },
+      formLabelWidth: '120px'
     }
   },
   methods: {
@@ -38,7 +67,16 @@ export default {
       this.$axios.get('http://localhost:3000/users/queryUser?uid=1').then(res => {
         console.log(res)
       })
+    },
+    login: function () {
+      var url = this.HOST + '/users/login?name=' + this.form.name+'&'+'password='+this.form.password;
+      this.$axios.get(url).then(res => {
+        console.log(res)
+      })
     }
+  },
+  components: {
+    LoginDialog
   }
 }
 </script>
@@ -59,5 +97,19 @@ export default {
 .el-button {
     margin-top: 10px;
 }
+
+  .eldialogcss{
+    width: 50%;
+    margin-left: 20%
+  }
+  .elformcss{
+    width: 90%;
+  }
+
+  .registercss{
+    margin-left: 5%;
+  }
+
+
 
 </style>

@@ -35,12 +35,12 @@
     <br/>
 
     <div align="left">
-      <el-tag>姆巴佩</el-tag>
-      <el-tag type="success">世界杯</el-tag>
-      <el-tag type="info">小米</el-tag>
-      <el-tag type="warning">邓肯</el-tag>
-      <el-tag type="danger">西安</el-tag>
-    </div>
+    <el-tag>姆巴佩</el-tag>
+    <el-tag type="success">世界杯</el-tag>
+    <el-tag type="info">小米</el-tag>
+    <el-tag type="warning">邓肯</el-tag>
+    <el-tag type="danger">西安</el-tag>
+  </div>
 
     <br/>
     <br/>
