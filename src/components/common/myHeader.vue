@@ -13,9 +13,12 @@
       </el-menu-item>
       <el-menu-item index="3">消息中心</el-menu-item>
       <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
-      <el-button v-if="islogin == 1" type="primary" >登 陆</el-button>
-      <el-button type="primary" >注 册</el-button>
+      <el-button v-if="islogin == 1" type="primary" @click="dialogFormVisible = true">登 陆</el-button>
+      <el-button v-if="isregister == 1" type="primary" >注 册</el-button>
+      <!--<img v-if="islogin == 0" class="useravtarcss" src="static/avatar.jpg"/>-->
+      <span v-if="islogin == 0" class="nickcss" >{{form.nickname}} &emsp;</span>
       <el-button type="primary" v-on:click="jumpToWrite">写文章</el-button>
+      <span v-if="islogin == 0" class="nickcss" > &emsp;退出登陆</span>
     </el-menu>
 
 
@@ -45,9 +48,11 @@ export default {
   data () {
     return {
       islogin:'1',
-      dialogFormVisible: true,
+      isregister: '1',
+      dialogFormVisible: false,
       form: {
-        name: '',
+        name: 'csdcjxksjdn',
+        nickname:'飞翔的天地',
         password: '',
         date1: '',
         date2: '',
@@ -71,8 +76,26 @@ export default {
     login: function () {
       var url = this.HOST + '/users/login?name=' + this.form.name+'&'+'password='+this.form.password;
       this.$axios.get(url).then(res => {
-        console.log(res)
-      })
+        sessionStorage.mhusername = res.data[0].username;
+        this.form.nickname = res.data[0].nickname;
+        this.islogin = '0';
+        this.isregister = '0';
+        console.log(res);
+        this.dialogFormVisible = false;
+      });
+    }
+
+  },
+  mounted:function () {
+    console.log('mounted');
+    console.log(sessionStorage.mhusername);
+    if(sessionStorage.mhusername)
+    {
+      console.log('mountedif');
+      this.islogin = '0';
+      this.isregister = '0'
+    }else{
+      console.log('mountedelse');
     }
   },
   components: {
@@ -108,6 +131,20 @@ export default {
 
   .registercss{
     margin-left: 5%;
+  }
+
+.useravtarcss{
+  margin-left: 15px;
+  margin-top: 15px;
+  width:40px;
+  height:40px;
+  border-radius:20px;
+}
+
+  .nickcss{
+    font-size: small;
+    font-style: inherit;
+    color: #3a8ee6;
   }
 
 

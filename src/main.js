@@ -15,15 +15,16 @@ import 'quill/dist/quill.bubble.css'
 
 /* axios 发送请求引入 */
 import axios from 'axios'
+// axios.defaults.withCredentials = true;
 Vue.prototype.$axios = axios;
-Vue.prototype.HOST = 'http://localhost:3000';
+Vue.prototype.HOST = 'http://47.96.96.91:3000';
 
 
 Vue.use(VueQuillEditor);
 
 Vue.use(ElementUI);
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
 new Vue({
