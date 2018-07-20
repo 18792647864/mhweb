@@ -1,46 +1,70 @@
 <template>
-  <el-dialog title="收货地址" :visible.sync="dialogFormVisible">
-    <el-form :model="form">
-      <el-form-item label="活动名称" :label-width="formLabelWidth">
-        <el-input v-model="form.name" auto-complete="off"></el-input>
+  <el-dialog title="用 户 登 陆" :visible.sync="loginshow" class="eldialogcss">
+    <el-form  class="elformcss">
+      <el-form-item label="昵  称:" :label-width="formLabelWidth" >
+        <el-input v-model="name" auto-complete="off"></el-input>
       </el-form-item>
-      <el-form-item label="活动区域" :label-width="formLabelWidth">
-        <el-select v-model="form.region" placeholder="请选择活动区域">
-          <el-option label="区域一" value="shanghai"></el-option>
-          <el-option label="区域二" value="beijing"></el-option>
-        </el-select>
+      <el-form-item label="密  码:" :label-width="formLabelWidth" >
+        <el-input v-model="password" type="password"></el-input>
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button @click="dialogFormVisible = false">取 消</el-button>
-      <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+    <div slot="footer" class="el-footer">
+      <el-button @click="setLoginShow" style="margin: auto">取 消</el-button>
+      <el-button type="primary" @click="login" style="margin: auto">登 陆</el-button>
     </div>
   </el-dialog>
+
 
 </template>
 
 <script>
     export default {
-        name: "login-dialog",
+      name: "login-dialog",
       data() {
         return {
-          dialogFormVisible: true,
-          form: {
-            name: '',
-            region: '',
-            date1: '',
-            date2: '',
-            delivery: false,
-            type: [],
-            resource: '',
-            desc: ''
-          },
+          name: '',
+          nickname:'',
+          password: '',
           formLabelWidth: '120px'
         };
+      },
+      methods: {
+        login: function () {
+          var url = this.HOST + '/users/login?name=' + this.name+'&'+'password='+this.password;
+          this.$axios.get(url).then(res => {
+            sessionStorage.mhusername = res.data[0].username;
+            this.$store.commit('setNickname',res.data[0].nickname);
+            this.$store.commit('islogin',0);
+            this.$store.commit('isregister',0);
+            console.log(res);
+            this.$store.commit('isloginshow',false);
+          });
+        },
+        setLoginShow: function () {
+          console.log('isloginshow');
+          this.$store.commit('isloginshow',false);
+        }
+      },
+      mounted:function () {
+        console.log('mounted');
+        console.log(sessionStorage.mhusername);
+      },
+      computed: {
+        loginshow () {
+          return this.$store.state.loginshow
+        }
       }
     }
 </script>
 
 <style scoped>
+
+  .eldialogcss{
+    width: 50%;
+    margin-left: 20%
+  }
+  .elformcss{
+    width: 90%;
+  }
 
 </style>

@@ -13,11 +13,17 @@ import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 
 
+import Vuex from 'vuex'
+import store from './vuex/store'
+
+Vue.use(Vuex);
+
+
 /* axios 发送请求引入 */
 import axios from 'axios'
 // axios.defaults.withCredentials = true;
 Vue.prototype.$axios = axios;
-Vue.prototype.HOST = 'http://47.96.96.91:3000';
+Vue.prototype.HOST = 'http://localhost:3000';
 
 
 Vue.use(VueQuillEditor);
@@ -30,6 +36,7 @@ Vue.config.productionTip = false;
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 });

@@ -19,12 +19,12 @@
           {{item.uId}}
         </span>
         <span>&emsp;</span>
-        <img class="likecss" src="static/comment.png" title="评论"/>
+        <img class="likecss" src="@/assets/images/comment.png" title="评论"/>
         <span>
           15
         </span>
         <span>&emsp;</span>
-        <img class="likecss" src="static/like.png" title="点赞"/>
+        <img class="likecss" src="@/assets/images/like.png" title="点赞"/>
         <span>
           100
         </span>
