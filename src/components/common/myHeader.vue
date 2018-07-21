@@ -11,6 +11,7 @@
           综合推荐
       </el-menu-item>
       <el-menu-item index="3">消息中心</el-menu-item>
+      <el-menu-item index="4">消息中心</el-menu-item>
       <el-button v-if="loginstate == 1" type="primary" @click="setLoginShow">登 陆</el-button>
       <el-button v-if="registerstate == 1" type="primary"v-on:click="jumpToRegister" >注 册</el-button>
       <!--<img v-if="islogin == 0" class="useravtarcss" src="static/avatar.jpg"/>-->

@@ -63,7 +63,6 @@ import { quillEditor } from 'vue-quill-editor'
           content: this.content
         };
 
-
         var qs = require('qs');
         this.$axios({
           method: 'post',

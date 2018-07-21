@@ -16,11 +16,11 @@
 
         <div>
           <el-form :model="ruleForm"  ref="ruleForm" label-width="100px" class="demo-ruleForm">
-            <el-form-item label="昵  称" prop="name" required style="width: 60%" >
-              <el-input v-model="ruleForm.name"></el-input>
+            <el-form-item label="昵  称" prop="nickname" required style="width: 60%" >
+              <el-input v-model="ruleForm.nickname"></el-input>
             </el-form-item>
-            <el-form-item label="性  别" prop="region" required style="width: 60%" >
-              <el-select v-model="ruleForm.region" placeholder="请选择性别" style="width: 100%" >
+            <el-form-item label="性  别" prop="gender" required style="width: 60%" >
+              <el-select v-model="ruleForm.gender" placeholder="请选择性别" style="width: 100%" >
                 <el-option label="男" value="1"></el-option>
                 <el-option label="女" value="2"></el-option>
                 <el-option label="不详" value="0"></el-option>
@@ -40,25 +40,25 @@
 
             <el-form-item label="出生日期" >
               <el-col :span="11">
-                <el-form-item prop="date1">
-                  <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date1" style="width: 100%;"></el-date-picker>
+                <el-form-item prop="birthday">
+                  <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.birthday" style="width: 100%;"></el-date-picker>
                 </el-form-item>
               </el-col>
             </el-form-item>
 
-            <el-form-item label="手机号码" prop="name">
+            <el-form-item label="手机号码" prop="phonenumber">
               <el-input v-model="ruleForm.phonenumber"></el-input>
             </el-form-item>
 
-            <el-form-item label="邮箱地址" prop="name">
+            <el-form-item label="邮箱地址" prop="mailbox">
               <el-input v-model="ruleForm.mailbox"></el-input>
             </el-form-item>
 
-            <el-form-item label="你的公司" prop="name">
+            <el-form-item label="你的公司" prop="company">
               <el-input v-model="ruleForm.company"></el-input>
             </el-form-item>
 
-            <el-form-item label="职  业" prop="name">
+            <el-form-item label="职  业" prop="career">
               <el-input v-model="ruleForm.career"></el-input>
             </el-form-item>
 
@@ -101,45 +101,45 @@ export default {
       name: "register",
       data() {
         return {
-          ruleForm: {
-            name: '',
-            region: '',
-            date1: '',
-            date2: '',
-            delivery: false,
-            type: [],
-            resource: '',
-            desc: ''
-          },
-          rules: {
-            name: [
-              { required: true, message: '请输入活动名称', trigger: 'blur' },
-              { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-            ],
-            region: [
-              { required: true, message: '请选择活动区域', trigger: 'change' }
-            ],
-            date1: [
-              { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
-            ],
-            date2: [
-              { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
-            ],
-            type: [
-              { type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change' }
-            ],
-            resource: [
-              { required: true, message: '请选择活动资源', trigger: 'change' }
-            ]
+          ruleForm:{
+            nickname:'',
+            gender:'',
+            password:'',
+            birthday:'',
+            phonenumber:'',
+            mailbox:'',
+            company:'',
+            career:'',
+            personalprofile:''
           }
+
         };
       },
       methods: {
         submitForm(formName) {
           this.$refs[formName].validate((valid) => {
             if (valid) {
-              //
-              alert('submit!');
+
+              var qs = require('qs');
+              var url = this.HOST + '/users/register';
+              this.$axios({
+                method: 'post',
+                url: url,
+                data:qs.stringify(this.ruleForm, { indices: false }),
+                headers:{
+                  'Content-Type':'application/x-www-form-urlencoded'
+                }
+              }).then(res => {
+                console.log(res);
+                if(res.data.insertId > 0)
+                {
+                  this.$message({
+                    type: 'success',
+                    message: '注册成功!'
+                  });
+                  this.$router.push({path: '/'})
+                }
+              });
             } else {
               console.log('error submit!!');
               return false;
