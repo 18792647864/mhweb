@@ -60,7 +60,8 @@
      },
       jumpToRead: function (article) {
         console.log(article);
-        this.$router.push({name:'readArticle',query:{ title:article.title,
+        this.$router.push({name:'readArticle',query:{ article_id:article.article_id,
+                                                      title:article.title,
                                                       uId:article.uId,
                                                       release_time:article.release_time,
                                                       categoryId:article.categoryId,

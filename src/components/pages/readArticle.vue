@@ -71,11 +71,12 @@
       <p class="topicTitlecss">说点什么</p>
       <el-input
         type="textarea"
-        :rows="2"
+        size="large"
+        :rows="4"
         placeholder="请输入评论内容"
         v-model="comments">
       </el-input>
-      <el-button class="pushButtoncss" type="primary">发表</el-button>
+      <el-button class="pushButtoncss" type="primary" @click="publishcomment">发表</el-button>
     </div>
 
     <div align="left">
@@ -163,9 +164,8 @@
         addComments:'说点什么',
         topComments:'热门评论',
         LatestComments:'最新评论',
-        comments:null,
+        comments:'',
         currentDate: new Date()
-
       }
     },
     components: {
@@ -176,7 +176,7 @@
       getContentInfo: function () {
         if(this.article.content_id == null || this.article.content_id == "")
         {
-          console.log('当前文章ID为空！');
+          console.log('当前文章内容ID为空！');
           return
         }
         var url = this.HOST + '/article/getSingleArticle?contentId=' + this.article.content_id;
@@ -185,7 +185,49 @@
           console.log(res);
           console.log(this.contentInfo);
         })
+      },
+      publishcomment: function () {
+        //判断登陆
+        if(this.$store.state.loginstate  == 1) {
+          this.$alert('未登录，请先登陆', '登陆提示', {
+            confirmButtonText: '确定'
+          });
+          return;
+        }
+
+        //判断内容是不是空的
+        if(this.article.content_id == null || this.article.content_id == "")
+        {
+          console.log('当前文章内容ID为空！');
+          return
+        }
+        //插入评论
+        var qs = require('qs');
+        var url = this.HOST + '/article/addcomments';
+        this.$axios({
+          method: 'post',
+          url: url,
+          data:qs.stringify({
+            'article_id': this.article.article_id,
+            'uId': '1',
+            'comments': this.comments
+          }, { indices: false }),
+          headers:{
+            'Content-Type':'application/x-www-form-urlencoded'
+          }
+        }).then(res => {
+          console.log(res);
+          if(res.data.insertId > 0)
+          {
+            this.$message({
+              type: 'success',
+              message: '评论成功!'
+            });
+            this.comments = '';
+          }
+        });
       }
+
     },
     created:function () {
       // console.log("created");
@@ -202,6 +244,7 @@
       this.article.categoryId = this.$route.query.categoryId;
       this.article.introduction = this.$route.query.introduction;
       this.article.content_id = this.$route.query.content_id;
+      this.article.article_id = this.$route.query.article_id;
       this.getContentInfo();
     }
   }
@@ -348,6 +391,10 @@
     clear: both
   }
 
+
+  .commentinputcss{
+    height: 100px;
+  }
 
 
 
