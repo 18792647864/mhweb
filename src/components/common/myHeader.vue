@@ -16,8 +16,8 @@
       <el-button v-if="registerstate == 1" type="primary"v-on:click="jumpToRegister" >注 册</el-button>
       <!--<img v-if="islogin == 0" class="useravtarcss" src="static/avatar.jpg"/>-->
       <span v-if="loginstate == 0" class="nickcss" >{{nickname}} &emsp;</span>
-      <el-button type="primary" v-on:click="jumpToWrite">写文章</el-button>
-      <span v-if="loginstate == 0" class="nickcss" > &emsp;退出登陆</span>
+      <el-button type="primary" v-on:click="jumpToWrite" >写文章</el-button>
+      <span v-if="loginstate == 0" class="nickcss" @click="loginOff"> &emsp;退出登陆</span>
     </el-menu>
 
     <login-dialog ></login-dialog>
@@ -39,7 +39,16 @@ export default {
   },
   methods: {
     jumpToWrite: function (event) {
-      this.$router.push({path: '/WriteArticle'})
+      console.log(this.$store.state.loginstate);
+      if(this.$store.state.loginstate  == 1) {
+        this.$alert('未登录，请先登陆', '登陆提示', {
+          confirmButtonText: '确定'
+        });
+        return;
+      }
+      else {
+        this.$router.push({path: '/WriteArticle'})
+      }
     },
     jumpToRegister: function (event) {
       this.$router.push({path: '/register'})
@@ -52,6 +61,25 @@ export default {
     setLoginShow: function () {
       console.log('isloginshow');
       this.$store.commit('isloginshow',true);
+    },
+    loginOff: function () {
+      this.$confirm('确定要退出登陆?', '提示', {
+        confirmButtonText: '退出',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '退出成功!'
+        });
+        this.$store.commit('islogin',1);
+        this.$store.commit('isregister',1);
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消退出'
+        });
+      });
     }
 
   },

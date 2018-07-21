@@ -1,8 +1,8 @@
 <template>
   <el-dialog title="用 户 登 陆" :visible.sync="loginshow" class="eldialogcss">
     <el-form  class="elformcss">
-      <el-form-item label="昵  称:" :label-width="formLabelWidth" >
-        <el-input v-model="name" auto-complete="off"></el-input>
+      <el-form-item label="名  称:" :label-width="formLabelWidth" >
+        <el-input v-model="name" auto-complete="off"  placeholder="会员名/手机号/邮箱"></el-input>
       </el-form-item>
       <el-form-item label="密  码:" :label-width="formLabelWidth" >
         <el-input v-model="password" type="password"></el-input>

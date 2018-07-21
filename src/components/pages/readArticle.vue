@@ -214,7 +214,7 @@
     border-radius: 20px;
     width: 40%;
     height: auto;
-    margin-left: 23%;
+    margin-left: 24%;
     top: auto;
     left: auto;
     border: #2d3237;

@@ -17,7 +17,7 @@
         <div>
           <el-form :model="ruleForm"  ref="ruleForm" label-width="100px" class="demo-ruleForm">
             <el-form-item label="昵  称" prop="nickname" required style="width: 60%" >
-              <el-input v-model="ruleForm.nickname"></el-input>
+              <el-input v-model="ruleForm.nickname" ></el-input>
             </el-form-item>
             <el-form-item label="性  别" prop="gender" required style="width: 60%" >
               <el-select v-model="ruleForm.gender" placeholder="请选择性别" style="width: 100%" >
@@ -26,6 +26,11 @@
                 <el-option label="不详" value="0"></el-option>
               </el-select>
             </el-form-item>
+
+            <el-form-item label="手机号码" prop="phonenumber" required style="width: 60%">
+              <el-input v-model="ruleForm.phonenumber"></el-input>
+            </el-form-item>
+
             <el-form-item label="设置密码" prop="password" required style="width: 60%" >
               <el-input v-model="ruleForm.password" type="password" ></el-input>
             </el-form-item>
@@ -46,9 +51,6 @@
               </el-col>
             </el-form-item>
 
-            <el-form-item label="手机号码" prop="phonenumber">
-              <el-input v-model="ruleForm.phonenumber"></el-input>
-            </el-form-item>
 
             <el-form-item label="邮箱地址" prop="mailbox">
               <el-input v-model="ruleForm.mailbox"></el-input>

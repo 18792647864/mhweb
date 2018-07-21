@@ -4,18 +4,25 @@
 
     <div class="quilleditorcss">
 
-        <h3 align="left" style="margin-top:10px" >文章标题</h3>
+      <div class="order">
+        <span class="line"></span>
+        <span class="txt">投 稿</span>
+        <span class="line"></span>
+        <span class="pointout" @click="submissionPointout">投稿提示</span>
+      </div>
 
-        <el-input v-model="title" placeholder="请输入标题"></el-input>
+        <!--<h3 align="left" style="margin-top:10px" >文章标题</h3>-->
 
-        <h3 align="left">文章简介</h3>
-        <el-input
-          type="textarea"
-          :rows="2"
-          placeholder="请输入文章简介"
-          v-model="introduction">
-        </el-input>
-        <h3 align="left">文章内容</h3>
+        <el-input v-model="title" placeholder="请输入标题,1-60个字" class="titlecss"></el-input>
+
+        <!--<h3 align="left">文章简介</h3>-->
+        <!--<el-input-->
+          <!--type="textarea"-->
+          <!--:rows="2"-->
+          <!--placeholder="请输入文章简介"-->
+          <!--v-model="introduction">-->
+        <!--</el-input>-->
+        <h5 align="left">文章内容</h5>
         <quill-editor ref="myTextEditor"
                       v-model="content"
                       :options = "editorOption"
@@ -54,9 +61,9 @@ import { quillEditor } from 'vue-quill-editor'
     methods: {
 
       saveArticle: function () {
-        console.log(this.title)
-        console.log(this.introduction)
-        console.log(this.content)
+        // console.log(this.title)
+        // console.log(this.introduction)
+        // console.log(this.content)
         var parm = {
           title: this.title,
           introduction: this.introduction,
@@ -81,6 +88,11 @@ import { quillEditor } from 'vue-quill-editor'
         this.$axios.get('http://localhost:3000/users/queryUser?uid=1').then(res => {
           console.log(res)
         })
+      },
+      submissionPointout: function () {
+        this.$alert('请保持原创、尊重原创、转载请注明出处、欢迎投稿' , '投稿提示', {
+          confirmButtonText: 'I KNOW'
+        });
       }
     }
   }
@@ -90,16 +102,45 @@ import { quillEditor } from 'vue-quill-editor'
   .quilleditorcss{
     background-color: #fff;
     border-radius: 20px;
-    width: 1000px;
-    height: auto;
-    margin: auto;
-    top: auto;
-    left: auto;
+    width: 40%;
+    margin-left: 24%;
+
+  }
+
+  .titlecss{
+    margin-top: 3%;
   }
 
   .elbuttoncss {
-    margin-top: 10px;
+    margin-top: 10%;
+    left: 0px;
     float:left
+  }
+
+
+  .order {
+    height: 60px;
+    line-height: 60px;
+    text-align: right;
+  }
+
+  .order .line {
+    display: inline-block;
+    width: 40%;
+    border-top: 1px solid #ccc ;
+  }
+  .order .txt {
+    color: #2d3237;
+    font-size: xx-large;
+    vertical-align: super;
+  }
+
+  .order .pointout{
+    color: #3a8ee6;
+  }
+
+  .quill-editor {
+    height: 200px;
   }
 
 </style>
