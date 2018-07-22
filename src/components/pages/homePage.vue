@@ -15,22 +15,22 @@
       </div>
 
       <div class="autorInfo" align="left">
+        <img class="avatarcss" src="@/assets/images/avatar.jpg" title="头像"/>
         <span>
-          {{item.uId}}
+          {{item.nickname}}
         </span>
         <span>&emsp;</span>
         <img class="likecss" src="@/assets/images/comment.png" title="评论"/>
         <span>
-          15
+          {{item.count_comments}}
         </span>
         <span>&emsp;</span>
         <img class="likecss" src="@/assets/images/like.png" title="点赞"/>
         <span>
-          100
+          {{item.count_likes}}
         </span>
         <span>&emsp;{{item.release_time}}</span>
-
-        <a  class="channelcss" href="homePage.vue">{{item.categoryId}}</a>
+        <a  class="channelcss" href="homePage.vue">{{item.categoryname}}</a>
       </div>
       <hr class="dividingline" align="left" />
       <div style="margin: 10px 0;"></div>
@@ -66,7 +66,10 @@
                                                       release_time:article.release_time,
                                                       categoryId:article.categoryId,
                                                       introduction:article.introduction,
-                                                      content_id:article.content_id}});
+                                                      content_id:article.content_id,
+                                                      count_comments:article.count_comments,
+                                                      count_likes:article.count_likes,
+                                                      categoryname:article.categoryname}});
       },
    },
    mounted:function () {
@@ -120,8 +123,14 @@
     height:15px;
   }
 
+  .avatarcss{
+    height:20px;
+    border-radius:5px;
+  }
+
   .channelcss{
     float: right;
+    color: #c0ccda;
   }
 </style>
 

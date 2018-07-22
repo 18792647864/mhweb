@@ -11,13 +11,13 @@
       <span>{{article.uId}}</span>
       <span>&emsp;</span>
       <img class="likecss" src="@/assets/images/comment.png" title="评论"/>
-      <span>15</span>
+      <span>{{article.count_comments}}</span>
       <span>&emsp;</span>
       <img class="likecss" src="@/assets/images/like.png" title="点赞"/>
-      <span>100</span>
+      <span>{{article.count_likes}}</span>
       <span>&emsp;{{article.release_time}}</span>
       <span>&emsp;&emsp;收藏</span>
-      <a class="channelcss" href="homePage.vue">{{article.categoryId}}</a>
+      <a class="channelcss" href="homePage.vue">{{article.categoryname}}</a>
     </div>
 
     <div class="introductioncss" align="left">
@@ -28,7 +28,7 @@
 
     <div class="praise-box">
       <img  align="" class="likecontentcss" src="@/assets/images/like.png" title="点赞"/>
-      <span style="margin-top: 0px">100</span>
+      <span style="margin-top: 0px">{{article.count_likes}}</span>
     </div>
 
     <br/>
@@ -48,20 +48,53 @@
     <div align="left">
       <p class="topicTitlecss">推荐阅读</p>
 
-      <el-row>
-        <el-col :span="8" v-for="(o, index) in 2" :key="o" :offset="index > 0 ? 2 : 0">
+      <el-row class="pushnewscss">
+        <el-col :span="6" v-for="(o, index) in 3" :key="o" :offset="index > 0 ? 3 : 0">
           <el-card :body-style="{ padding: '0px' }">
             <img src="@/assets/images/hamburger.50e4091.png" class="image">
-            <div style="padding: 14px;">
+            <div style="padding: 12px;">
               <span>好吃的汉堡</span>
-              <div class="bottom clearfix">
-                <time class="time">{{ currentDate }}</time>
-                <el-button type="text" class="button">操作按钮</el-button>
-              </div>
+              <!--<div class="bottom clearfix">-->
+                <!--<time class="time">{{ currentDate }}</time>-->
+                <!--&lt;!&ndash;<el-button type="text" class="button">操作按钮</el-button>&ndash;&gt;-->
+              <!--</div>-->
+            </div>
+          </el-card>
+        </el-col>
+
+        <el-col :span="6" v-for="(o, index) in 3" :key="o" :offset="index > 0 ? 3 : 0" style="margin-top: 3%">
+          <el-card :body-style="{ padding: '0px' }">
+            <img src="@/assets/images/hamburger.50e4091.png" class="image">
+            <div style="padding: 12px;">
+              <span>好吃的汉堡</span>
+              <!--<div class="bottom clearfix">-->
+                <!--<time class="time">{{ currentDate }}</time>-->
+                <!--&lt;!&ndash;<el-button type="text" class="button">操作按钮</el-button>&ndash;&gt;-->
+              <!--</div>-->
             </div>
           </el-card>
         </el-col>
       </el-row>
+
+      <!--<el-row :gutter="12">-->
+        <!--<el-col :span="8">-->
+
+          <!--<el-card shadow="always" >-->
+            <!--总是显示-->
+          <!--</el-card>-->
+        <!--</el-col>-->
+        <!--<el-col :span="8">-->
+          <!--<el-card shadow="hover">-->
+            <!--鼠标悬浮时显示-->
+          <!--</el-card>-->
+        <!--</el-col>-->
+        <!--<el-col :span="8">-->
+          <!--<el-card shadow="never">-->
+            <!--从不显示-->
+          <!--</el-card>-->
+        <!--</el-col>-->
+      <!--</el-row>-->
+
     </div>
 
     <br/>
@@ -245,6 +278,9 @@
       this.article.introduction = this.$route.query.introduction;
       this.article.content_id = this.$route.query.content_id;
       this.article.article_id = this.$route.query.article_id;
+      this.article.count_comments = this.$route.query.count_comments;
+      this.article.count_likes = this.$route.query.count_likes;
+      this.article.categoryname = this.$route.query.categoryname;
       this.getContentInfo();
     }
   }
@@ -377,8 +413,8 @@
 
   .image {
     width: 100%;
-    display: block;
-    height: 220px;
+    /*display: block;*/
+    height: 130px;
   }
 
   .clearfix:before,
@@ -395,6 +431,12 @@
   .commentinputcss{
     height: 100px;
   }
+
+
+  .pushnewscss{
+    height: 10%;
+  }
+
 
 
 

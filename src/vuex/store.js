@@ -22,7 +22,7 @@ const store = new Vuex.Store({
       state.registerstate = msg
     },
     setNickname (state,msg){
-      state.setNickname = msg
+      state.nickname = msg
     }
   }
 });

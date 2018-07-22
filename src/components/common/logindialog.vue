@@ -34,6 +34,7 @@
           this.$axios.get(url).then(res => {
             sessionStorage.mhusername = res.data[0].username;
             this.$store.commit('setNickname',res.data[0].nickname);
+            console.log(res.data[0].nickname);
             this.$store.commit('islogin',0);
             this.$store.commit('isregister',0);
             console.log(res);

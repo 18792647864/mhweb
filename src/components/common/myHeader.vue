@@ -4,7 +4,7 @@
       class="el-menu-demo elmenucss"
       mode="horizontal">
       <el-menu-item index="1">
-        <img src="@/assets/images/logo.png" alt="蛮荒社区" title="首页" height="50px"/>
+        <img src="@/assets/images/logo.png" alt="蛮荒社区" title="首页" height="60px"/>
       </el-menu-item>
 
       <el-menu-item index="2" >
@@ -14,7 +14,7 @@
       <el-menu-item index="4">消息中心</el-menu-item>
       <el-button v-if="loginstate == 1" type="primary" @click="setLoginShow">登 陆</el-button>
       <el-button v-if="registerstate == 1" type="primary"v-on:click="jumpToRegister" >注 册</el-button>
-      <!--<img v-if="islogin == 0" class="useravtarcss" src="static/avatar.jpg"/>-->
+      <!--<img v-if="loginstate == 0" class="useravtarcss" src="@/assets/images/avatar.jpg"/>-->
       <span v-if="loginstate == 0" class="nickcss" >{{nickname}} &emsp;</span>
       <el-button type="primary" v-on:click="jumpToWrite" >写文章</el-button>
       <span v-if="loginstate == 0" class="nickcss" @click="loginOff"> &emsp;退出登陆</span>
@@ -147,9 +147,12 @@ export default {
 .useravtarcss{
   margin-left: 15px;
   margin-top: 15px;
-  width:40px;
-  height:40px;
+  /*margin-bottom: 0px;*/
+  /*top: 100px;*/
+  width:30px;
+  height:30px;
   border-radius:20px;
+  position: static;
 }
 
   .nickcss{
