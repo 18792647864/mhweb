@@ -69,6 +69,7 @@
                                                       content_id:article.content_id,
                                                       count_comments:article.count_comments,
                                                       count_likes:article.count_likes,
+                                                      nickname:article.nickname,
                                                       categoryname:article.categoryname}});
       },
    },
@@ -89,6 +90,7 @@
     left: auto;
     border: #2d3237;
     margin-top: 70px;
+    margin-left: 24%;
   }
 
   .titlecss{

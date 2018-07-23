@@ -4,6 +4,7 @@ import HelloWorld from '@/components/HelloWorld';
 import WriteArticle from '@/components/pages/writeArticle';
 import ReadArticle from '@/components/pages/readArticle';
 import Register from '@/components/pages/register';
+import PersonalPage from '@/components/pages/personalpage';
 
 Vue.use(Router);
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/register',
       name: 'register',
       component: Register
+    },
+    {
+      path: '/PersonalPage',
+      name: 'PersonalPage',
+      component:PersonalPage
     }
   ]
 })

@@ -9,7 +9,8 @@ const store = new Vuex.Store({
     loginshow: false,
     loginstate:0,
     registerstate:0,
-    nickname:''
+    nickname:'',
+    uId:''
   },
   mutations:{
     isloginshow (state,msg){
@@ -23,6 +24,9 @@ const store = new Vuex.Store({
     },
     setNickname (state,msg){
       state.nickname = msg
+    },
+    setUId (state,msg){
+      state.setUId = msg
     }
   }
 });

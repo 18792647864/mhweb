@@ -33,6 +33,7 @@
           var url = this.HOST + '/users/login?name=' + this.name+'&'+'password='+this.password;
           this.$axios.get(url).then(res => {
             sessionStorage.mhusername = res.data[0].username;
+            this.$store.commit('setUId',res.data[0].uid);
             this.$store.commit('setNickname',res.data[0].nickname);
             console.log(res.data[0].nickname);
             this.$store.commit('islogin',0);

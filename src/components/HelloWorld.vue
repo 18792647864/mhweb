@@ -5,6 +5,8 @@
     <home-page></home-page>
 
     <my-footer> </my-footer>
+
+
   </div>
 </template>
 

@@ -16,12 +16,12 @@
         <el-input v-model="title" placeholder="请输入标题,1-60个字" class="titlecss"></el-input>
 
         <!--<h3 align="left">文章简介</h3>-->
-        <!--<el-input-->
-          <!--type="textarea"-->
-          <!--:rows="2"-->
-          <!--placeholder="请输入文章简介"-->
-          <!--v-model="introduction">-->
-        <!--</el-input>-->
+        <el-input
+          type="textarea"
+          :rows="3"
+          placeholder="请输入文章简介"
+          v-model="introduction" class="titlecss">
+        </el-input>
         <h5 align="left">文章内容</h5>
         <quill-editor ref="myTextEditor"
                       v-model="content"
@@ -67,18 +67,15 @@ import { quillEditor } from 'vue-quill-editor'
         var parm = {
           title: this.title,
           introduction: this.introduction,
-          content: this.content
+          content: this.content,
+          uId:this.$store.state.uId
         };
 
         var qs = require('qs');
         this.$axios({
           method: 'post',
           url: 'http://localhost:3000/article/addArticle',
-          data:qs.stringify({
-            'title': this.title,
-            'introduction': this.introduction,
-            'content': this.content
-          }, { indices: false }),
+          data:qs.stringify(parm, { indices: false }),
           headers:{
             'Content-Type':'application/x-www-form-urlencoded'
           }

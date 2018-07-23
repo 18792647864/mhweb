@@ -8,7 +8,7 @@
     </div>
 
     <div class="autorInfo" align="left">
-      <span>{{article.uId}}</span>
+      <span>{{article.nickname}}</span>
       <span>&emsp;</span>
       <img class="likecss" src="@/assets/images/comment.png" title="评论"/>
       <span>{{article.count_comments}}</span>
@@ -62,38 +62,8 @@
           </el-card>
         </el-col>
 
-        <el-col :span="6" v-for="(o, index) in 3" :key="o" :offset="index > 0 ? 3 : 0" style="margin-top: 3%">
-          <el-card :body-style="{ padding: '0px' }">
-            <img src="@/assets/images/hamburger.50e4091.png" class="image">
-            <div style="padding: 12px;">
-              <span>好吃的汉堡</span>
-              <!--<div class="bottom clearfix">-->
-                <!--<time class="time">{{ currentDate }}</time>-->
-                <!--&lt;!&ndash;<el-button type="text" class="button">操作按钮</el-button>&ndash;&gt;-->
-              <!--</div>-->
-            </div>
-          </el-card>
-        </el-col>
       </el-row>
 
-      <!--<el-row :gutter="12">-->
-        <!--<el-col :span="8">-->
-
-          <!--<el-card shadow="always" >-->
-            <!--总是显示-->
-          <!--</el-card>-->
-        <!--</el-col>-->
-        <!--<el-col :span="8">-->
-          <!--<el-card shadow="hover">-->
-            <!--鼠标悬浮时显示-->
-          <!--</el-card>-->
-        <!--</el-col>-->
-        <!--<el-col :span="8">-->
-          <!--<el-card shadow="never">-->
-            <!--从不显示-->
-          <!--</el-card>-->
-        <!--</el-col>-->
-      <!--</el-row>-->
 
     </div>
 
@@ -114,28 +84,29 @@
 
     <div align="left">
       <p class="topicTitlecss">热门评论</p>
-      <div title="热门评论">
+      <div title="热门评论" v-for="item in hotcomments">
         <img class="useravtarcss" src="@/assets/images/avatar.jpg"/>
-        <span class="usernamecss">&emsp;用户名称</span>
+        <span class="usernamecss">&emsp;{{item.nickname}}</span>
 
         <img class="likecss likecommentcss" src="@/assets/images/like.png" title="点赞"/>
         <span>
-          100
+            {{item.like_num}}
         </span>
         <span>
           &emsp;&emsp;&emsp;
         </span>
         <img class="likecss" src="@/assets/images/report.png" title="举报"/>
         <span>
-          100
+           0
         </span>
         <p class="commentcss">
-          年纪轻轻就疯了，一点都不可惜
+          {{item.content}}
         </p>
         <img class="reviewcss" src="@/assets/images/review.png" title="点评"/>
         <span class="reviewfontcss">
           I want 点评
         </span>
+        <hr class="dividingline" align="left" />
       </div>
     </div>
 
@@ -144,28 +115,29 @@
 
     <div align="left">
       <p class="topicTitlecss">最新评论</p>
-      <div title="热门评论">
+      <div title="热门评论" v-for="item in newcomments">
         <img class="useravtarcss" src="@/assets/images/avatar.jpg"/>
-        <span class="usernamecss">&emsp;用户名称</span>
+        <span class="usernamecss">&emsp;{{item.nickname}}</span>
 
         <img class="likecss likecommentcss" src="@/assets/images/like.png" title="点赞"/>
         <span>
-          100
+          {{item.like_num}}
         </span>
         <span>
           &emsp;&emsp;&emsp;
         </span>
         <img class="likecss" src="@/assets/images/report.png" title="举报"/>
         <span>
-          100
+            0
         </span>
         <p class="commentcss">
-          毕志飞🌚🌚🌚🌚🌚🌚🌚🌚🌚🌚
+          {{item.content}}
         </p>
         <img class="reviewcss" src="@/assets/images/review.png" title="点评"/>
         <span class="reviewfontcss">
           I want 点评
         </span>
+        <hr class="dividingline" align="left" />
       </div>
     </div>
 
@@ -198,7 +170,9 @@
         topComments:'热门评论',
         LatestComments:'最新评论',
         comments:'',
-        currentDate: new Date()
+        currentDate: new Date(),
+        hotcomments:null,
+        newcomments:null
       }
     },
     components: {
@@ -217,6 +191,32 @@
           this.contentInfo = res.data;
           console.log(res);
           console.log(this.contentInfo);
+        })
+      },
+      getHotcomments: function () {
+        if(this.article.content_id == null || this.article.content_id == "")
+        {
+          console.log('当前文章内容ID为空！');
+          return
+        }
+        var url = this.HOST + '/article/getHotcomments?articleId=' + this.article.article_id;
+        this.$axios.get(url).then(res => {
+          console.log('getHotcomments');
+          this.hotcomments = res.data;
+          console.log(this.hotcomments);
+        })
+      },
+      getNewcomments: function () {
+        if(this.article.content_id == null || this.article.content_id == "")
+        {
+          console.log('当前文章内容ID为空！');
+          return
+        }
+        var url = this.HOST + '/article/getNewcomments?articleId=' + this.article.article_id;
+        this.$axios.get(url).then(res => {
+          console.log('getNewcomments');
+          this.newcomments = res.data;
+          console.log(this.newcomments);
         })
       },
       publishcomment: function () {
@@ -281,7 +281,13 @@
       this.article.count_comments = this.$route.query.count_comments;
       this.article.count_likes = this.$route.query.count_likes;
       this.article.categoryname = this.$route.query.categoryname;
+      this.article.nickname = this.$route.query.nickname;
+      //页面初始化的时候获取文章信息
       this.getContentInfo();
+      //页面初始化的时候获取文章的热评信息
+      this.getHotcomments();
+      //页面初始化的时候获取文章的最新评论信息
+      this.getNewcomments();
     }
   }
 </script>
@@ -336,7 +342,7 @@
 
   .reviewcss{
     margin-top: 10px;
-    height:20px;
+    height:15px;
   }
 
   .reviewfontcss{
@@ -348,7 +354,6 @@
   .likecommentcss{
     margin-left: 60%;
   }
-
 
 
   .channelcss{
@@ -372,8 +377,8 @@
   .useravtarcss{
     margin-left: 15px;
     margin-top: 10px;
-    width:30px;
-    height:30px;
+    width:25px;
+    height:25px;
     border-radius:10px;
   }
 
@@ -392,7 +397,6 @@
     cursor: pointer;
     margin-left: 45%;
   }
-
 
 
 
@@ -438,7 +442,13 @@
   }
 
 
-
+  .dividingline{
+    height:1px;
+    border:none;
+    border-top:1px dotted #185598;
+    margin-top: 20px;
+    width: 100%;
+  }
 
 
 </style>
