@@ -51,7 +51,7 @@
       },
     methods: {
       queryArticles: function (event) {
-       var url = this.HOST + '/article/queryArticle';
+       var url = this.HOST + '/article/queryArticle?isdraft=0';
        this.$axios.get(url).then(res => {
           console.log('console.log(res)');
           this.articleInfos = res.data;

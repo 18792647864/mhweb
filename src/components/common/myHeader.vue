@@ -3,20 +3,42 @@
     <el-menu
       class="el-menu-demo elmenucss"
       mode="horizontal">
-      <el-menu-item index="1">
-        <img src="@/assets/images/logo.png" alt="蛮荒社区" title="首页" height="60px"/>
+      <el-menu-item index="1" >
+        <img src="@/assets/images/logo.png" alt="蛮荒社区" title="首页" height="60px" v-on:click="jumpToHome"/>
       </el-menu-item>
 
       <el-menu-item index="2" >
           综合推荐
       </el-menu-item>
       <el-menu-item index="3">IT资讯</el-menu-item>
-      <el-menu-item index="4">区块链专题</el-menu-item>
+      <el-menu-item index="4" >区块链专题</el-menu-item>
+      <!--<el-menu-item index="5" style="width: 20px"> <i class="el-icon-menu imenucss"></i></el-menu-item>-->
+
+      <el-menu-item index="5" style="width: 20px">
+          <el-dropdown trigger="click" >
+            <span class="el-dropdown-link">
+              <i class="el-icon-menu imenucss"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item class="clearfix">
+                评论评论评论
+                <el-badge class="mark" :value="12" />
+
+                  <a href="/">这是一个a标签</a>
+
+              </el-dropdown-item>
+              <el-dropdown-item class="clearfix">
+                回复评论
+                <!--<el-badge class="mark" :value="3" />-->
+              </el-dropdown-item>
+            </el-dropdown-menu>
+        </el-dropdown>
+      </el-menu-item>
       <el-button v-if="loginstate == 1" type="primary" @click="setLoginShow">登 陆</el-button>
       <el-button v-if="registerstate == 1" type="primary"v-on:click="jumpToRegister" >注 册</el-button>
       <!--<img v-if="loginstate == 0" class="useravtarcss" src="@/assets/images/avatar.jpg"/>-->
       <!--<el-menu-item style="margin-left: 23%" v-if="loginstate == 0" class="nickcss" v-on:click="jumpToPersonalpage">{{nickname}} &emsp;</el-menu-item>-->
-      <el-menu-item  v-if="loginstate == 0" class="nickavtarcss" index="5">
+      <el-menu-item  v-if="loginstate == 0" class="nickavtarcss" index="6">
         <img class="useravtarcss" src="@/assets/images/avatar.jpg" v-on:click="jumpToPersonalpage"/> &emsp;
       </el-menu-item>
       <el-button type="primary" v-on:click="jumpToWrite" >写文章</el-button>
@@ -53,6 +75,9 @@ export default {
         this.$router.push({path: '/WriteArticle'})
       }
     },
+    jumpToHome: function (event) {
+        this.$router.push({path: '/'})
+    },
     jumpToRegister: function (event) {
       this.$router.push({path: '/register'})
     },
@@ -75,16 +100,18 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.$message({
-          type: 'success',
-          message: '退出成功!'
+        this.$notify({
+          title: '成功',
+          message: '退出成功',
+          type: 'success'
         });
         this.$store.commit('islogin',1);
         this.$store.commit('isregister',1);
       }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '取消退出'
+        this.$notify({
+          title: '警告',
+          message: '取消退出',
+          type: 'warning'
         });
       });
     }
@@ -138,7 +165,8 @@ export default {
 }
 
 .el-menu-item{
-  font-size: 18px;
+  font-size: 15px;
+  border: #2d3237;
 }
 
 .el-button {
@@ -171,6 +199,11 @@ export default {
   margin-left: 23%;
   width: 7%;
 }
+
+  .imenucss{
+    margin: -7px 0px 0px -10px;
+    /*float: left*/
+  }
 
 
 

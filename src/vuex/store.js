@@ -26,7 +26,7 @@ const store = new Vuex.Store({
       state.nickname = msg
     },
     setUId (state,msg){
-      state.setUId = msg
+      state.uId = msg
     }
   }
 });

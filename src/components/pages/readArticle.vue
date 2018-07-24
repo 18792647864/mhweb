@@ -421,20 +421,7 @@
     height: 130px;
   }
 
-  .clearfix:before,
-  .clearfix:after {
-    display: table;
-    content: "";
-  }
 
-  .clearfix:after {
-    clear: both
-  }
-
-
-  .commentinputcss{
-    height: 100px;
-  }
 
 
   .pushnewscss{

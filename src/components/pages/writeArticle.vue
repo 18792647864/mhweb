@@ -29,8 +29,8 @@
                    >
         </quill-editor>
 
-        <el-button class="elbuttoncss" type="primary" v-on:click="saveArticle" >发布文章</el-button>
-        <el-button class="elbuttoncss" type="primary">保存草稿</el-button>
+        <el-button class="elbuttoncss" type="primary" v-on:click="saveArticle('0')" >发布文章</el-button>
+        <el-button class="elbuttoncss" type="primary" v-on:click="saveArticle('1')">保存草稿</el-button>
     </div>
 
     <my-footer> </my-footer>
@@ -60,7 +60,7 @@ import { quillEditor } from 'vue-quill-editor'
     },
     methods: {
 
-      saveArticle: function () {
+      saveArticle: function (isdraft) {
         // console.log(this.title)
         // console.log(this.introduction)
         // console.log(this.content)
@@ -68,7 +68,8 @@ import { quillEditor } from 'vue-quill-editor'
           title: this.title,
           introduction: this.introduction,
           content: this.content,
-          uId:this.$store.state.uId
+          uId:this.$store.state.uId,
+          isdraft:isdraft
         };
 
         var qs = require('qs');
@@ -79,6 +80,11 @@ import { quillEditor } from 'vue-quill-editor'
           headers:{
             'Content-Type':'application/x-www-form-urlencoded'
           }
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '操作成功!'
+          });
         })
       },
       getUserInfo: function (event) {
