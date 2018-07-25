@@ -41,6 +41,8 @@
 </template>
 
 <script>
+
+  import Bus from '../common/Bus.js';
  export default {
     name: "home-page",
     data() {
@@ -50,14 +52,16 @@
         }
       },
     methods: {
-      queryArticles: function (event) {
-       var url = this.HOST + '/article/queryArticle?isdraft=0';
+      queryArticles: function () {
+       var cateId = this.$store.state.cateId;
+       var url = this.HOST + '/article/queryArticle?isdraft=0&cateId='+cateId;
        this.$axios.get(url).then(res => {
           console.log('console.log(res)');
           this.articleInfos = res.data;
           console.log(res)
        })
-     },
+      },
+
       jumpToRead: function (article) {
         console.log(article);
         this.$router.push({name:'readArticle',query:{ article_id:article.article_id,
@@ -75,6 +79,9 @@
    },
    mounted:function () {
      this.queryArticles();
+     Bus.$on('on', (msg) => {
+       this.queryArticles();
+     })
    }
  }
 </script>

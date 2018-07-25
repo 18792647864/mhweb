@@ -157,7 +157,7 @@
                   </div>
                 </div>
             </el-tab-pane>
-            <el-tab-pane label="我的收藏">我的收藏</el-tab-pane>
+            <el-tab-pane label="我的社区">我的社区</el-tab-pane>
             <el-tab-pane label="我的参与">我的参与</el-tab-pane>
           </el-tabs>
 

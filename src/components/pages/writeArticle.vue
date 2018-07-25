@@ -15,12 +15,21 @@
 
         <el-input v-model="title" placeholder="请输入标题,1-60个字" class="titlecss"></el-input>
 
+        <el-select v-model="catevalue" placeholder="请选择主题" class="selectcss">
+          <el-option
+            v-for="item in cateoptions"
+            :key="item.catevalue"
+            :label="item.catelabel"
+            :value="item.catevalue">
+          </el-option>
+        </el-select>
+
         <!--<h3 align="left">文章简介</h3>-->
         <el-input
           type="textarea"
           :rows="3"
           placeholder="请输入文章简介"
-          v-model="introduction" class="titlecss">
+          v-model="introduction" class="intrcss">
         </el-input>
         <h5 align="left">文章内容</h5>
         <quill-editor ref="myTextEditor"
@@ -50,7 +59,9 @@ import { quillEditor } from 'vue-quill-editor'
         content: '',
         introduction:'',
         title:'',
-        editorOption:{}
+        editorOption:{},
+        cateoptions: null,
+        catevalue: ''
       }
     },
     components: {
@@ -68,8 +79,9 @@ import { quillEditor } from 'vue-quill-editor'
           title: this.title,
           introduction: this.introduction,
           content: this.content,
-          uId:this.$store.state.uId,
-          isdraft:isdraft
+          uId:sessionStorage.uId,
+          isdraft:isdraft,
+          catevalue:this.catevalue
         };
 
         var qs = require('qs');
@@ -92,11 +104,22 @@ import { quillEditor } from 'vue-quill-editor'
           console.log(res)
         })
       },
+      getCateOptions: function (event) {
+        var url = 'http://localhost:3000/article/getCateOptions';
+        this.$axios.get(url).then(res => {
+          console.log('getCateOptions');
+          console.log(res);
+          this.cateoptions = res.data;
+        })
+      },
       submissionPointout: function () {
         this.$alert('请保持原创、尊重原创、转载请注明出处、欢迎投稿' , '投稿提示', {
           confirmButtonText: 'I KNOW'
         });
       }
+    },
+    mounted:function () {
+      this.getCateOptions();
     }
   }
 </script>
@@ -107,10 +130,21 @@ import { quillEditor } from 'vue-quill-editor'
     border-radius: 20px;
     width: 40%;
     margin-left: 24%;
+  }
 
+  .intrcss{
+    margin-top: 3%;
+    width: 100%;
   }
 
   .titlecss{
+    margin-top: 3%;
+    width: 70%;
+    float: left;
+  }
+
+
+  .selectcss{
     margin-top: 3%;
   }
 
@@ -132,6 +166,7 @@ import { quillEditor } from 'vue-quill-editor'
     width: 40%;
     border-top: 1px solid #ccc ;
   }
+
   .order .txt {
     color: #2d3237;
     font-size: xx-large;
@@ -143,7 +178,7 @@ import { quillEditor } from 'vue-quill-editor'
   }
 
   .quill-editor {
-    height: 200px;
+    height: 300px;
   }
 
 </style>

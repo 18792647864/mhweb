@@ -4,14 +4,14 @@
       class="el-menu-demo elmenucss"
       mode="horizontal">
       <el-menu-item index="1" >
-        <img src="@/assets/images/logo.png" alt="蛮荒社区" title="首页" height="60px" v-on:click="jumpToHome"/>
+        <img src="@/assets/images/logo.png" alt="蛮荒社区" title="首页" height="60px" v-on:click="jumpToHome('0')"/>
       </el-menu-item>
 
-      <el-menu-item index="2" >
+      <el-menu-item index="2" v-on:click="jumpToHome('0')">
           综合推荐
       </el-menu-item>
-      <el-menu-item index="3">IT资讯</el-menu-item>
-      <el-menu-item index="4" >区块链专题</el-menu-item>
+      <el-menu-item index="3" v-on:click="jumpToHome('1')" >IT资讯</el-menu-item>
+      <el-menu-item index="4" v-on:click="jumpToHome('4')">区块链专题</el-menu-item>
       <!--<el-menu-item index="5" style="width: 20px"> <i class="el-icon-menu imenucss"></i></el-menu-item>-->
 
       <el-menu-item index="5" style="width: 20px">
@@ -20,15 +20,18 @@
               <i class="el-icon-menu imenucss"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item class="clearfix">
-                评论评论评论
-                <el-badge class="mark" :value="12" />
+              <el-dropdown-item class="clearfix" >
+                <div v-on:click="jumpToHome('2')">
+                  创业频道
+                </div>
+                <!--<el-badge class="mark" :value="12" />-->
 
-                  <a href="/">这是一个a标签</a>
+                  <!--<a href="/">这是一个a标签</a>-->
 
               </el-dropdown-item>
-              <el-dropdown-item class="clearfix">
-                回复评论
+              <el-dropdown-item class="clearfix" >
+
+                <span v-on:click="jumpToHome('3')">法律先锋</span>
                 <!--<el-badge class="mark" :value="3" />-->
               </el-dropdown-item>
             </el-dropdown-menu>
@@ -54,6 +57,9 @@
 
 import LoginDialog from './logindialog';
 
+import Bus from './Bus.js';
+
+
 
 export default {
   name: 'myHeader',
@@ -75,8 +81,10 @@ export default {
         this.$router.push({path: '/WriteArticle'})
       }
     },
-    jumpToHome: function (event) {
-        this.$router.push({path: '/'})
+    jumpToHome: function (cateId) {
+      this.$store.commit('setCateId',cateId);
+      Bus.$emit('on', '来自兄弟组件');
+      this.$router.push({path: '/'})
     },
     jumpToRegister: function (event) {
       this.$router.push({path: '/register'})
@@ -107,6 +115,8 @@ export default {
         });
         this.$store.commit('islogin',1);
         this.$store.commit('isregister',1);
+        sessionStorage.removeItem('mhusername');
+        sessionStorage.removeItem('uId');
       }).catch(() => {
         this.$notify({
           title: '警告',
@@ -118,13 +128,15 @@ export default {
 
   },
   mounted:function () {
-    // console.log('mounted');
+    console.log('mounted');
     console.log(sessionStorage.mhusername);
+    console.log(sessionStorage.uId);
     if(sessionStorage.mhusername) {
+      console.log('1111111111');
       this.$store.commit('islogin',0);
       this.$store.commit('isregister',0);
     }
-    else{
+    else {
       this.$store.commit('islogin',1);
       this.$store.commit('isregister',1);
     }

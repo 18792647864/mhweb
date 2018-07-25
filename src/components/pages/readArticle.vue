@@ -17,7 +17,7 @@
       <span>{{article.count_likes}}</span>
       <span>&emsp;{{article.release_time}}</span>
       <span>&emsp;&emsp;收藏</span>
-      <a class="channelcss" href="homePage.vue">{{article.categoryname}}</a>
+      <a class="channelcss" v-on:click="jumpToHome">{{article.categoryname}}</a>
     </div>
 
     <div class="introductioncss" align="left">
@@ -27,7 +27,7 @@
     <div align="left" v-html="contentInfo"></div>
 
     <div class="praise-box">
-      <img  align="" class="likecontentcss" src="@/assets/images/like.png" title="点赞"/>
+      <img  align="" class="likecontentcss" src="@/assets/images/like.png" @click="addArticlelikes" title="点赞"/>
       <span style="margin-top: 0px">{{article.count_likes}}</span>
     </div>
 
@@ -35,12 +35,12 @@
     <br/>
 
     <div align="left">
-    <el-tag>姆巴佩</el-tag>
-    <el-tag type="success">世界杯</el-tag>
-    <el-tag type="info">小米</el-tag>
-    <el-tag type="warning">邓肯</el-tag>
-    <el-tag type="danger">西安</el-tag>
-  </div>
+      <el-tag >姆巴佩</el-tag>
+      <el-tag type="success">世界杯</el-tag>
+      <el-tag type="info">小米</el-tag>
+      <el-tag type="warning">邓肯</el-tag>
+      <el-tag type="danger">西安</el-tag>
+    </div>
 
     <br/>
     <br/>
@@ -154,15 +154,18 @@
 
 
 <script>
-  import MyHeader from '../common/myHeader'
-  import MyFooter from '../common/myFooter'
+  import MyHeader from '../common/myHeader';
+  import MyFooter from '../common/myFooter';
+  import Bus from '../common/Bus.js';
 
   export default {
     name: "read-article",
     data () {
       return {
         msg: '这是读文章的页面！',
-        article: {},
+        article: {
+          count_likes:0
+        },
         contentInfo:null,
         abortTag:"相关标签",
         recommendedReading:'推荐阅读',
@@ -180,6 +183,54 @@
       MyFooter
     },
     methods: {
+
+      addArticlelikes: function () {
+        //判断登陆
+        if(this.$store.state.loginstate  == 1) {
+          this.$alert('未登录，请先登陆', '登陆提示', {
+            confirmButtonText: '确定'
+          });
+          return;
+        }
+
+        var articleId = this.article.article_id;
+        var uId = sessionStorage.uId;
+        var url = this.HOST + '/article/addArticlelikes?articleId=' + articleId+'&uId='+uId;
+        this.$axios.get(url).then(res => {
+          var likeResult = res.data;
+          if(likeResult.changedRows == 1)
+          {
+            console.log("点赞成功");
+            this.article.count_likes++;
+            this.$notify({
+              title: '成功',
+              message: '点赞成功',
+              type: 'success'
+            });
+          }
+          else{
+            console.log("点赞失败");
+            this.$notify({
+              title: '警告',
+              message: '取消退出',
+              type: 'warning'
+            });
+          }
+          console.log(res);
+        }).catch(res => {
+          this.$notify({
+            title: '警告',
+            message: '点赞失败',
+            type: 'warning'
+          });
+        })
+
+      },
+      jumpToHome: function () {
+        console.log(this.article.categoryId);
+        this.$store.commit('setCateId',this.$route.query.categoryId);
+        this.$router.push({path: '/'});
+      },
       getContentInfo: function () {
         if(this.article.content_id == null || this.article.content_id == "")
         {
@@ -327,7 +378,7 @@
   }
 
   .autorInfo{
-    width: 60%;
+    width: 95%;
     margin-top: 10px;
   }
 
@@ -358,6 +409,7 @@
 
   .channelcss{
     float: right;
+    color: #3a8ee6;
   }
 
   .topicTitlecss{

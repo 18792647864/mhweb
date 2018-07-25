@@ -32,18 +32,33 @@
         login: function () {
           var url = this.HOST + '/users/login?name=' + this.name+'&'+'password='+this.password;
           this.$axios.get(url).then(res => {
-            sessionStorage.mhusername = res.data[0].username;
-            sessionStorage.uId = res.data[0].uid;
-            this.$store.commit('setUId',res.data[0].uid);
-            console.log('res.data[0].uid');
-            console.log(res.data[0].uid);
-            console.log(this.$store.state.uId);
-            this.$store.commit('setNickname',res.data[0].nickname);
-            console.log(res.data[0].nickname);
-            this.$store.commit('islogin',0);
-            this.$store.commit('isregister',0);
+            console.log('####################');
             console.log(res);
-            this.$store.commit('isloginshow',false);
+            console.log('$$$$$$$$$$$$$$$$$$$$');
+            var userResult = res.data;
+            if(userResult.code != 2000)
+            {
+              this.$notify({
+                title: '警告',
+                message: userResult.errInfo,
+                type: 'warning'
+              });
+            }
+            else
+            {
+              sessionStorage.mhusername = userResult.userInfo.username;
+              sessionStorage.uId = userResult.userInfo.uid;
+              this.$store.commit('setUId',userResult.userInfo.uid);
+              console.log('userResult.userInfo');
+              console.log(userResult.userInfo.uid);
+              console.log(this.$store.state.uId);
+              this.$store.commit('setNickname',userResult.userInfo.nickname);
+              console.log(userResult.userInfo.nickname);
+              this.$store.commit('islogin',0);
+              this.$store.commit('isregister',0);
+              this.$store.commit('isloginshow',false);
+            }
+
           });
         },
         setLoginShow: function () {

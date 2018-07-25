@@ -10,7 +10,8 @@ const store = new Vuex.Store({
     loginstate:0,
     registerstate:0,
     nickname:'',
-    uId:''
+    uId:'',
+    cateId:0
   },
   mutations:{
     isloginshow (state,msg){
@@ -27,6 +28,9 @@ const store = new Vuex.Store({
     },
     setUId (state,msg){
       state.uId = msg
+    },
+    setCateId(state,msg){
+      state.cateId = msg
     }
   }
 });
