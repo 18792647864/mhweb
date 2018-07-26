@@ -15,7 +15,7 @@
 
         <el-input v-model="title" placeholder="请输入标题,1-60个字" class="titlecss"></el-input>
 
-        <el-select v-model="catevalue" placeholder="请选择主题" class="selectcss">
+        <el-select v-model="catevalue" placeholder="请选择文章分类" class="selectcss">
           <el-option
             v-for="item in cateoptions"
             :key="item.catevalue"
@@ -23,6 +23,8 @@
             :value="item.catevalue">
           </el-option>
         </el-select>
+
+      <el-button type="primary" v-on:click="jumpToCreateCommunity">新的社区</el-button>
 
         <!--<h3 align="left">文章简介</h3>-->
         <el-input
@@ -70,7 +72,9 @@ import { quillEditor } from 'vue-quill-editor'
       quillEditor
     },
     methods: {
-
+      jumpToCreateCommunity: function (event) {
+        this.$router.push({path: '/CreateCommunity'})
+      },
       saveArticle: function (isdraft) {
         // console.log(this.title)
         // console.log(this.introduction)
@@ -139,7 +143,7 @@ import { quillEditor } from 'vue-quill-editor'
 
   .titlecss{
     margin-top: 3%;
-    width: 70%;
+    width: 58%;
     float: left;
   }
 

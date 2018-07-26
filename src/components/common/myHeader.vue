@@ -41,6 +41,7 @@
       <el-button v-if="registerstate == 1" type="primary"v-on:click="jumpToRegister" >注 册</el-button>
       <!--<img v-if="loginstate == 0" class="useravtarcss" src="@/assets/images/avatar.jpg"/>-->
       <!--<el-menu-item style="margin-left: 23%" v-if="loginstate == 0" class="nickcss" v-on:click="jumpToPersonalpage">{{nickname}} &emsp;</el-menu-item>-->
+      <span v-if="loginstate == 0" class="nickcss" @click="loginOff"> &emsp;第一个社区</span>
       <el-menu-item  v-if="loginstate == 0" class="nickavtarcss" index="6">
         <img class="useravtarcss" src="@/assets/images/avatar.jpg" v-on:click="jumpToPersonalpage"/> &emsp;
       </el-menu-item>

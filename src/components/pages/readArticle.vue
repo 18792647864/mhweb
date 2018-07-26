@@ -156,7 +156,6 @@
 <script>
   import MyHeader from '../common/myHeader';
   import MyFooter from '../common/myFooter';
-  import Bus from '../common/Bus.js';
 
   export default {
     name: "read-article",

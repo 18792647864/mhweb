@@ -5,6 +5,8 @@ import WriteArticle from '@/components/pages/writeArticle';
 import ReadArticle from '@/components/pages/readArticle';
 import Register from '@/components/pages/register';
 import PersonalPage from '@/components/pages/personalpage';
+import CreateCommunity from '@/components/pages/createcommunity';
+
 
 Vue.use(Router);
 
@@ -34,6 +36,11 @@ export default new Router({
       path: '/PersonalPage',
       name: 'PersonalPage',
       component:PersonalPage
+    },
+    {
+      path: '/CreateCommunity',
+      name: 'CreateCommunity',
+      component:CreateCommunity
     }
   ]
 })
