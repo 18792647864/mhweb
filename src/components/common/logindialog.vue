@@ -48,6 +48,7 @@
             {
               sessionStorage.mhusername = userResult.userInfo.username;
               sessionStorage.uId = userResult.userInfo.uid;
+              sessionStorage.isAdmin = userResult.userInfo.is_admin;
               this.$store.commit('setUId',userResult.userInfo.uid);
               console.log('userResult.userInfo');
               console.log(userResult.userInfo.uid);
