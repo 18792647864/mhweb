@@ -6,6 +6,7 @@ import ReadArticle from '@/components/pages/readArticle';
 import Register from '@/components/pages/register';
 import PersonalPage from '@/components/pages/personalpage';
 import CreateCommunity from '@/components/pages/createcommunity';
+import CommunityReview from '@/components/pages/communityreview';
 
 
 Vue.use(Router);
@@ -41,6 +42,11 @@ export default new Router({
       path: '/CreateCommunity',
       name: 'CreateCommunity',
       component:CreateCommunity
+    },
+    {
+      path: '/CommunityReview',
+      name: 'CommunityReview',
+      component:CommunityReview
     }
   ]
 })

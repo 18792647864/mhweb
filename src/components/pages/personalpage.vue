@@ -157,7 +157,14 @@
                   </div>
                 </div>
             </el-tab-pane>
-            <el-tab-pane label="我的社区">我的社区</el-tab-pane>
+            <el-tab-pane label="我的社区">
+              我的社区
+              <div style="margin-top: 10%">
+                <el-button type="primary" @click="onCommunityReview" >审核社区</el-button>
+              </div>
+
+
+            </el-tab-pane>
             <el-tab-pane label="我的参与">我的参与</el-tab-pane>
           </el-tabs>
 
@@ -188,11 +195,15 @@
             phone_number:'',
             career:'',
             birthday:null,
-            personal_profile:''
+            personal_profile:'',
+            is_admin:0
           }
         }
       },
       methods: {
+        onCommunityReview:function () {
+          this.$router.push({path: '/CommunityReview'})
+        },
         queryArticles: function (event) {
           var url = this.HOST + '/article/queryUserArticle?uId='+sessionStorage.uId+'&isdraft=';
           this.$axios.get(url+'1').then(res => {

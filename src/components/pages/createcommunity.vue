@@ -39,7 +39,7 @@
             </el-form-item>
 
             <el-form-item style="width: 50%">
-              <el-button type="primary" @click="onSubmit">立即创建</el-button>
+              <el-button type="primary" @click="onCreateCommunity">立即创建</el-button>
               <el-button @click="addColumn">新增栏目</el-button>
               <el-button>取消</el-button>
             </el-form-item>
@@ -56,86 +56,24 @@
 
       <div v-if="active == 2">
 
-          <div v-if="isAdmin == 1">
 
-              <div >
-
-                  <el-table
-                    ref="singleTable"
-                    :data="tableData"
-                    highlight-current-row
-                    @current-change="handleCurrentChange"
-                    style="width: 100%">
-                    <el-table-column
-                      type="index"
-                      width="50">
-                    </el-table-column>
-                    <el-table-column
-                      property="date"
-                      label="日期"
-                      width="120">
-                    </el-table-column>
-                    <el-table-column
-                      property="name"
-                      label="姓名"
-                      width="120">
-                    </el-table-column>
-                    <el-table-column
-                      property="address"
-                      label="地址">
-                    </el-table-column>
-                  </el-table>
-                  <!--<div style="margin-top: 20px">-->
-                    <!--<el-button @click="setCurrent(tableData[1])">选中第二行</el-button>-->
-                    <!--<el-button @click="setCurrent()">取消选择</el-button>-->
-                  <!--</div>-->
-
-              </div>
-
-              <div style="margin-top: 10px;margin-left: 0px;">
-
-                  <el-form ref="communityInfo" :model="communityInfo" label-width="100px" class="demo-dynamic">
-                    <el-form-item label="社区名称" style="width: 50%">
-                      <el-input v-model="communityInfo.name" placeholder="名称1-12个字，请遵守社区命名规则" disabled></el-input>
-                    </el-form-item>
-
-                    <el-form-item label="社区描述" style="width: 50%" >
-                      <el-input type="textarea" v-model="communityInfo.desc" placeholder="我们是谁？我们要聚集一群什么样的人？我们有着什么样的专业和爱好？" disabled></el-input>
-                    </el-form-item>
-
-                    <el-form-item
-                      v-for="(column, index) in communityInfo.columns"
-                      :label="'栏  目' + (index+1)"
-                      :key="column.key"
-                      :prop="'columns.' + index + '.value'"
-                      :rules="{
-                      required: true, message: '栏目名称不能为空', trigger: 'blur'
-                      }"
-                      style="width: 50%"  >
-                      <el-input v-model="column.value" style="width: 78%;float: left" disabled></el-input>
-                      <el-button @click.prevent="removeColumn(column)">删除</el-button>
-                    </el-form-item>
-
-                    <el-form-item style="width: 50%">
-                      <el-button type="primary" @click="onSubmit">立即创建</el-button>
-                      <el-button>取消</el-button>
-                    </el-form-item>
-
-                  </el-form>
-
-              </div>
-
-          </div>
-
-          <div v-if="isAdmin == 0" style="margin-top: 10%">
+          <div v-if="isPass == 0" style="margin-top: 10%">
             您申请的社区 xxxx 已经通过审核，恭喜您成为社区管理员
 
+          </div>
+
+          <div v-if="isPass == 1" style="margin-top: 10%">
+            您申请的社区 xxxx 未通过审核，恭喜您成为社区管理员
+
 
           </div>
 
-          <div >
-
+          <div>
+            <br>
+            理由：{{approval_comments}}
           </div>
+
+
 
       </div>
 
@@ -157,31 +95,14 @@
         name: "createcommunity",
         data() {
           return {
-            isAdmin:0,
-            active: 2,
+            approval_comments:'',
+            isPass: 0,
+            active: 0,
             communityInfo: {
               name: '',
               desc: '',
-              columns:[]
-            },
-            tableData: [{
-              date: '2016-05-02',
-              name: '王小虎',
-              address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-              date: '2016-05-04',
-              name: '王小虎',
-              address: '上海市普陀区金沙江路 1517 弄'
-            }, {
-              date: '2016-05-01',
-              name: '王小虎',
-              address: '上海市普陀区金沙江路 1519 弄'
-            }, {
-              date: '2016-05-03',
-              name: '王小虎',
-              address: '上海市普陀区金沙江路 1516 弄'
-            }],
-            currentRow: null
+              columns: []
+            }
           };
         },
         components: {
@@ -201,14 +122,86 @@
               this.communityInfo.columns.splice(index, 1)
             }
           },
-          setCurrent(row) {
-            this.$refs.singleTable.setCurrentRow(row);
+          queryCreateCommunity() {
+            var url = this.HOST + '/users/queryCreateCommunity?uId='+sessionStorage.uId;
+            this.$axios({
+              method: 'get',
+              url: url,
+              headers:{
+                'Content-Type':'application/x-www-form-urlencoded'
+              }
+            }).then(res => {
+              console.log(' queryCreateCommunity  then');
+              console.log(res);
+              if(res.data.length>0)
+              {
+                if(res.data[0].status == 1)
+                {
+                  this.active = 1;
+                }
+                else if(res.data[0].status == 2)
+                {
+                  this.active = 2;
+                  this.isPass = 0;
+                  this.approval_comments = res.data[0].approval_comments;
+                }
+                else
+                {
+                  this.active = 2;
+                  this.isPass = 1;
+                  this.approval_comments = res.data[0].approval_comments;
+                }
+
+              }
+              else
+              {
+                this.active = 0;
+              }
+
+            }).catch(res=>{
+              console.log(' queryCreateCommunity  catch');
+              console.log(res);
+            });
+
           },
+          onCreateCommunity() {
+            var parm = this.communityInfo;
+            parm.uId = sessionStorage.uId;
+
+            //申请创建社区
+            var qs = require('qs');
+            var url = this.HOST + '/users/onCreateCommunity';
+            this.$axios({
+              method: 'post',
+              url: url,
+              data:qs.stringify(parm, { indices: false }),
+              headers:{
+                'Content-Type':'application/x-www-form-urlencoded'
+              }
+            }).then(res => {
+              console.log(' onCreateCommunity  then');
+              console.log(res);
+              if(res.data.insertId > 0) {
+                this.$message({
+                  type: 'success',
+                  message: '提交成功!'
+                });
+                this.active = 1;
+              }
+            }).catch(res=>{
+              console.log(' onCreateCommunity  catch');
+              console.log(res);
+            });
+          },
+
           handleCurrentChange(val) {
             console.log('handleCurrentChange');
             this.currentRow = val;
             console.log(val);
           }
+        },
+        mounted:function () {
+          this.queryCreateCommunity();
         }
     }
 </script>

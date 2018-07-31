@@ -1,10 +1,43 @@
 <template>
   <div>
+
+    <community-select></community-select>
+
     <el-menu
       class="el-menu-demo elmenucss"
       mode="horizontal">
       <el-menu-item index="1" >
-        <img src="@/assets/images/logo.png" alt="蛮荒社区" title="首页" height="60px" v-on:click="jumpToHome('0')"/>
+
+        <el-dropdown trigger="click">
+            <!--<span class="el-dropdown-link">-->
+             <img src="@/assets/images/logo.png" alt="蛮荒社区" title="首页" height="58px"/>
+            <!--</span>-->
+          <el-dropdown-menu slot="dropdown" class="dropcommunitycss dropdownmenucss">
+            <!--<el-dropdown-item class="clearfix" >-->
+              <div >
+                搜索区域
+                <el-badge class="mark" :value="12" />
+
+                <a href="/">这是一个a标签</a>
+              </div>
+              <div >
+                热门社区
+                <el-badge class="mark" :value="12" />
+
+                <a href="/">这是一个a标签</a>
+              </div>
+              <div >
+                社区列表
+                <el-badge class="mark" :value="12" />
+
+                <a href="/">这是一个a标签</a>
+                <el-button>这是一个a标签</el-button>
+              </div>
+
+            <!--</el-dropdown-item>-->
+
+          </el-dropdown-menu>
+        </el-dropdown>
       </el-menu-item>
 
 
@@ -52,12 +85,16 @@
 
     <login-dialog ></login-dialog>
 
+
+
   </div>
 </template>
 <script>
 
 
 import LoginDialog from './logindialog';
+
+import CommunitySelect from './communityselect';
 
 import Bus from './Bus.js';
 
@@ -159,7 +196,8 @@ export default {
     }
   },
   components: {
-    LoginDialog
+    LoginDialog,
+    CommunitySelect
   }
 }
 </script>
@@ -217,6 +255,17 @@ export default {
   .imenucss{
     margin: -7px 0px 0px -10px;
     /*float: left*/
+  }
+
+  .dropcommunitycss{
+    width: 40%;
+    margin-left: 24%;
+
+  }
+
+  .dropdownmenucss{
+    padding-top: 20px;
+    padding-left: 20px;
   }
 
 
